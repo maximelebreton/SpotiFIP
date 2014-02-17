@@ -1,0 +1,1 @@
+"use strict";angular.module("spotiFipApp",["ngResource"]),angular.module("spotiFipApp").controller("MainCtrl",["$scope",function(a){a.awesomeThings=["HTML5 Boilerplate","AngularJS","Karma"]}]);
