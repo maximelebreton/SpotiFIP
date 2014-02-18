@@ -66,12 +66,19 @@ body {
 .marketing p + h4 {
     margin-top: 28px;
 }
+.container {
+        max-width: 1280px;
+    }
+
+
+.progress-bar {
+-webkit-transition: width 10s ease;
+transition: width 2s ease;
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-    .container {
-        max-width: 730px;
-    }
+
 
     /* Remove the padding we set earlier */
     .header,

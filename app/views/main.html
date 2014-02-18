@@ -1,36 +1,88 @@
-<div class="header">
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
-  </ul>
-  <h3 class="text-muted">SpotiFIP</h3>
-</div>
-
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
-</div>
-
 <div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+    <div class="row">
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
+        <div class="col-xs-6 col-md-6" ng-controller="DatepickerCtrl">
+            <p class="input-group">
+                <input type="text" ng-change="changed()" class="form-control" datepicker-popup="longDate" ng-model="dt" is-open="opened" max="'2015-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </p>
+        </div>
 
-<div class="footer">
-  <p>♥ from the Yeoman team</p>
+
+        <div class="col-xs-6 col-md-3 text-center" style="margin-top:-37px;" ng-controller="TimepickerCtrl">
+            <div style="display: inline-block;">
+                <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-3">
+            <button ng-click="start()" class="btn btn-md btn-primary btn-block">Rechercher</button>
+        </div>
+
+    </div>
+
+
+    <div ng-show="loading">
+        <progressbar class="progress-striped active" value="loadingValue" type="{{loadingType}}">chargement...
+        </progressbar>
+    </div>
+
+    <div ng-show="ready">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Fip</th>
+                    <th></th>
+                    <th></th>
+                    <th>Spotify</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="fip in fipDatas" on-finish-render="test">
+                    <td>{{fip.time}}</td>
+
+                    <td>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" ng-src="{{fip.img.src}}" alt="">
+                            </a>
+                            <div class="media-body small">
+                                <ul class="list-group">
+                                    <li class="list-group-item small" title="Titre">
+                                        <strong>{{fip.track}}</strong>
+                                    </li>
+                                    <li class="list-group-item small" title="Artiste">{{fip.artist}}</li>
+                                    <li class="list-group-item small" title="Album / Année de sortie">
+                                        <em>{{fip.album}}</em>{{fip.release}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td></td>
+
+                    <td>
+                        <iframe ng-src="{{fip.spotify.trackEmbedSrc}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+                        <!--<dl>
+                          <dd ng-repeat="artist in fip.spotify.artists">{{artist.name}}</dd>
+                          <dd>{{fip.spotify.album.name}}</dd>
+                          <dd>{{fip.spotify.name}}</dd>
+                          <dd>{{fip.spotify.id}}</dd>
+                          <dd>{{fip.spotify.album.released}}</dd>
+                      </dl>-->
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <iframe ng-if="ready" ng-src="{{playlistHref}}" frameborder="0" width="100%" height="640" allowtransparency="true"></iframe>
+
+    </div>
+
 </div>
