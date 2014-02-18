@@ -1,3 +1,3 @@
 SpotiFIP
 ========
-Repository: https://github.com/maximelebreton/SpotiFIP/tree/gh-pages
+It's in the gh-pages branch: https://github.com/maximelebreton/SpotiFIP/tree/gh-pages
