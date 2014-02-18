@@ -30,6 +30,8 @@ App.directive('onFinishRender', function($timeout) {
 });
 
 App.controller('DatepickerCtrl', function($rootScope, $scope, $filter) {
+	$rootScope.startDate = $filter('date')(new Date(), 'yyyy-MM-dd');
+
     $scope.today = function() {
         $scope.dt = new Date();
     };
@@ -58,10 +60,8 @@ App.controller('DatepickerCtrl', function($rootScope, $scope, $filter) {
 
     // Disable weekend selection
 
-    $scope.toggleMin = function() {
-        $scope.minDate = ($scope.minDate) ? null : new Date();
-    };
-    $scope.toggleMin();
+    $scope.minDate = $filter('date')( new Date(new Date().getTime() - (13 * 24 * 60 * 60 * 1000)) , 'yyyy-MM-dd');
+    $scope.maxDate = $filter('date')( new Date() , 'yyyy-MM-dd');
 
     $scope.open = function($event) {
         $event.preventDefault();
@@ -78,6 +78,7 @@ App.controller('DatepickerCtrl', function($rootScope, $scope, $filter) {
 
 
 App.controller('TimepickerCtrl', function($rootScope, $scope, $filter) {
+    $rootScope.startHour = $filter('date')(new Date(), 'H');
 
     $scope.mytime = new Date();
 
@@ -105,8 +106,7 @@ App.controller('TimepickerCtrl', function($rootScope, $scope, $filter) {
 
 App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $timeout) {
 
-    $rootScope.startDate = $filter('date')(new Date(), 'yyyy-MM-dd');
-    $rootScope.startHour = $filter('date')(new Date(), 'H');
+
     $scope.tryNumbers = 3;
 
 

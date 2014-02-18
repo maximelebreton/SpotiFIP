@@ -3,8 +3,9 @@
     <div class="row">
 
         <div class="col-xs-6 col-md-6" ng-controller="DatepickerCtrl">
+
             <p class="input-group">
-                <input type="text" ng-change="changed()" class="form-control" datepicker-popup="longDate" ng-model="dt" is-open="opened" max="'2015-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <input type="text" ng-change="changed()" class="form-control" datepicker-popup="longDate" ng-model="dt" is-open="opened" datepicker-options="dateOptions" min="minDate" max="maxDate" ng-required="true" close-text="Close" />
                 <span class="input-group-btn">
                     <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i>
                     </button>
@@ -33,6 +34,8 @@
 
     <div ng-show="ready">
 
+        <div class="well well-md text-center"><a href="http://www.fipradio.fr/archives-antenne?start_date={{startDate}}&start_hour={{startHour}}&search=">{{fipDatas.length}} titres</a> ont été trouvés sur <strong>FIP</strong>, et {{playlist.length}} sont disponibles sur <strong>Spotify</strong></div>
+
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -48,7 +51,7 @@
 
                     <td>
                         <div class="media">
-                            <a class="pull-left" href="#">
+                            <a class="pull-left">
                                 <img class="media-object" ng-src="{{fip.img.src}}" alt="">
                             </a>
                             <div class="media-body small">
@@ -58,7 +61,7 @@
                                     </li>
                                     <li class="list-group-item small" title="Artiste">{{fip.artist}}</li>
                                     <li class="list-group-item small" title="Album / Année de sortie">
-                                        <em>{{fip.album}}</em>{{fip.release}}</li>
+                                        <em>{{fip.album}}</em> {{fip.release}}</li>
                                 </ul>
                             </div>
                         </div>
@@ -83,13 +86,13 @@
         
         <hr>
 
-        <h4>Écouter la playlist</h4>
-        <p>Écoutez directement la playlist dans Spotify</p>
+        <h4>Écoutez la playlist</h4>
+        <p></p>
         <iframe ng-if="ready" ng-src="{{playlistHref}}" frameborder="0" width="100%" height="640" allowtransparency="true"></iframe>
         
         <hr>
 
-        <h4>Ajouter la playlist à Spotify</h4>
+        <h4>Ajoutez cette playlist à Spotify</h4>
         <p>Copiez / collez simplement cette portion de code dans une playlist Spotify</p>
         <div class="form-control" style="height:auto!important;">
           <div ng-repeat="(key, track) in playlist">
