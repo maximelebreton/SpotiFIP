@@ -1,0 +1,182 @@
+typeof angular.callbacks._0 === 'function' && angular.callbacks._0({
+  "name": "fip check",
+  "lastrunstatus": "success",
+  "lastsuccess": "Tue Feb 18 2014 15:04:26 GMT+0000 (UTC)",
+  "frequency": "realtime",
+  "newdata": false,
+  "results": {
+    "collection1": [
+      {
+        "artist": "DARKSIDE",
+        "track": "PAPER TRAILS",
+        "img": {
+          "src": "http://a5.mzstatic.com/us/r30/Music/v4/5c/fd/39/5cfd392b-6aef-2433-1176-847d41865c3d/OLE-1035_Darkside_Psychic.100x100-75.jpg"
+        },
+        "album": "PSYCHIC",
+        "release": "(2013)",
+        "time": "15:58"
+      },
+      {
+        "artist": "GIL SCOTT HERON/BRIAN JACKSON/BARNETT WILLIAMS/GREG PHILLINGANES",
+        "track": "THREE MILES DOWN",
+        "img": {
+          "src": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+        },
+        "album": "SECRETS",
+        "release": "(1978)",
+        "time": "15:56"
+      },
+      {
+        "artist": "PRINCE",
+        "track": "BREAKFAST CAN WAIT",
+        "img": {
+          "src": "http://a4.mzstatic.com/us/r30/Music6/v4/c9/aa/47/c9aa47ce-423a-e6fc-4c68-0cfaf210a271/PRINCE-Breakfast_Can_Wait.100x100-75.jpg"
+        },
+        "album": "BREAKFAST CAN WAIT",
+        "release": "(2013)",
+        "time": "15:52"
+      },
+      {
+        "artist": "VANGELIS",
+        "track": "MESSAGES",
+        "img": {
+          "src": "http://a5.mzstatic.com/us/r30/Music/9c/0f/9c/mzi.jifrkkxd.100x100-75.jpg"
+        },
+        "album": "",
+        "release": "",
+        "time": "15:49"
+      },
+      {
+        "artist": "",
+        "track": "FIP ACTUALITE",
+        "img": {
+          "src": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+        },
+        "album": "",
+        "release": "",
+        "time": "15:49"
+      },
+      {
+        "artist": "THE MAGNETIC NORTH",
+        "track": "WARD HILL",
+        "img": {
+          "src": "http://a4.mzstatic.com/us/r30/Music/v4/05/ae/4b/05ae4b7e-e05a-e2f6-ab3f-252cd5e3fa05/cover.100x100-75.jpg"
+        },
+        "album": "ORKNEY SYMPHONY OF THE MAGNETIC NORTH (CD PRO",
+        "release": "(2012)",
+        "time": "15:45"
+      },
+      {
+        "artist": "JULIETTE",
+        "track": "UNE PETITE ROBE NOIRE",
+        "img": {
+          "src": "http://a1.mzstatic.com/us/r30/Music6/v4/04/c4/fc/04c4fc9d-77f6-2ff5-3cfc-e86193228ced/13UAAIM09100.100x100-75.jpg"
+        },
+        "album": "NOUR",
+        "release": "(2013)",
+        "time": "15:42"
+      },
+      {
+        "artist": "THE PAN AFRICAN ORCHESTRA",
+        "track": "YAA YAA KOLE",
+        "img": {
+          "src": "http://a4.mzstatic.com/us/r30/Music/82/07/8a/mzi.yywpodpu.100x100-75.jpg"
+        },
+        "album": "OPUS 1",
+        "release": "(1995)",
+        "time": "15:37"
+      },
+      {
+        "artist": "MAMANI KEITA",
+        "track": "MOGOBAOU",
+        "img": {
+          "src": "http://a4.mzstatic.com/us/r30/Music4/v4/5c/2d/f2/5c2df216-8897-749d-4610-b7f3f8cf1742/3149026008328.100x100-75.jpg"
+        },
+        "album": "KANOU (CD PROMO FIP)",
+        "release": "(2014)",
+        "time": "15:33"
+      },
+      {
+        "artist": "NAT ADDERLEY",
+        "track": "SACK OF WOE",
+        "img": {
+          "src": "http://a5.mzstatic.com/us/r30/Music/82/d7/28/mzi.vmwzmmup.100x100-75.jpg"
+        },
+        "album": "WORK SONG",
+        "release": "(1960)",
+        "time": "15:28"
+      },
+      {
+        "artist": "BETTYE LAVETTE",
+        "track": "I M TIRED",
+        "img": {
+          "src": "http://a2.mzstatic.com/us/r30/Music/v4/cf/98/90/cf989058-758d-b904-201f-25c4aece0656/045778719501.100x100-75.jpg"
+        },
+        "album": "THANKFUL N THOUGHTFUL",
+        "release": "(2012)",
+        "time": "15:25"
+      },
+      {
+        "artist": "THE STRANGLERS",
+        "track": "96 TEARS",
+        "img": {
+          "src": "http://a2.mzstatic.com/us/r30/Music/1b/54/4c/mzi.flujpqvc.100x100-75.jpg"
+        },
+        "album": "GREATEST HITS 1977/1990",
+        "release": "(1990)",
+        "time": "15:22"
+      },
+      {
+        "artist": "SPENCER DAVIS GROUP",
+        "track": "TRAMPOLINE",
+        "img": {
+          "src": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+        },
+        "album": "THE BEST OF SPENCER DAVIES GROUP",
+        "release": "(1967)",
+        "time": "15:20"
+      },
+      {
+        "artist": "LOU MARCO",
+        "track": "MA BERLINE",
+        "img": {
+          "src": "http://a1.mzstatic.com/us/r30/Music4/v4/99/78/5d/99785dac-9f4f-a968-669e-463926411063/3521383427156_cover.100x100-75.jpg"
+        },
+        "album": "SOUS LA PEAU",
+        "release": "(2014)",
+        "time": "15:16"
+      },
+      {
+        "artist": "SUZANNE VEGA",
+        "track": "CRACK IN THE WALL",
+        "img": {
+          "src": "http://a5.mzstatic.com/us/r30/Music4/v4/7b/bf/9a/7bbf9a36-2299-4749-5372-c3987588dfe6/0711297510089.100x100-75.jpg"
+        },
+        "album": "TALE FROM THE REALM OF THE QUEEN OF PENTACLES (CD PROMO FIP)",
+        "release": "(2014)",
+        "time": "15:11"
+      },
+      {
+        "artist": "GUI PAT METHENY UNITY GROUP",
+        "track": "BORN",
+        "img": {
+          "src": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+        },
+        "album": "KIN (CD PROMO)",
+        "release": "(2014)",
+        "time": "15:04"
+      },
+      {
+        "artist": "FRANK SINATRA",
+        "track": "TOO MARVELOUS FOR WORDS",
+        "img": {
+          "src": "http://a1.mzstatic.com/us/r30/Music/67/db/ec/mzi.ewlwbynq.100x100-75.jpg"
+        },
+        "album": "WHAT WOMEN WANT",
+        "release": "(1956)",
+        "time": "15:01"
+      }
+    ],
+    "collection2": []
+  }
+});

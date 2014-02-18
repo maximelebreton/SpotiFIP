@@ -1,8 +1,13 @@
 'use strict';
 
+// Spotify
 var spotifyApi = 'http://ws.spotify.com/search/1/track.json?q=';
+
+// FIP
 var fipApi = 'http://kimonolabs.com/api/7s1d5xz8?apikey=bfb617c617700d2b984e1b58cce5c544';
-//var fipApi = 'http://ws.spotify.com/search/1/track.json?q=fip';
+
+// For local testing
+//var fipApi = 'http://127.0.0.1:9000/json/fip-demo.json?q=';
 
 
 var App = angular.module('spotiFipApp', [
@@ -122,6 +127,8 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter) {
 
         // TO DO : use the get method, and allow cross origin policy
         $http.jsonp(fipApi + '&start_hour=' + $rootScope.startHour + '&start_date=' + $rootScope.startDate + '&callback=JSON_CALLBACK').success(function(data) {
+
+        	$scope.tryNumbers = 3;
             //$http.jsonp(fipApi).success(function(data) {
             $scope.fipDatas = data.results.collection1;
 
@@ -161,8 +168,7 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter) {
 
                         });
 
-                        fip.spotify.id = fip.spotify.href.replace("spotify:track:", "");
-                        $scope.playlist.push(fip.spotify.id);
+                        $scope.playlist.push(fip.spotify.href);
 
                         fip.spotify.trackEmbedSrc = 'https://embed.spotify.com/?uri=' + fip.spotify.href;
 
@@ -177,15 +183,18 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter) {
         }).error(function(data, status, headers, config) {
             $scope.loadingValue = 60;
             $scope.loadingType = 'warning';
-            $scope.start();
+            if (!$scope.tryNumbers == 0) {
+            	$scope.start();
+            	$scope.tryNumbers--;
+            }
+            
         });
 
         $scope.$on('test', function(ngRepeatFinishedEvent) {
             console.log('ready !');
             $scope.loading = false;
             $scope.ready = true;
-            $scope.playlist = $scope.playlist.join();
-            $scope.playlistHref = 'https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + $scope.playlist;
+            $scope.playlistHref = 'https://embed.spotify.com/?uri=spotify:trackset:FIP – '+$rootScope.startDate+ ' – ' +$rootScope.startHour+ 'h-'+ ($rootScope.startHour+1) +'h:' + $scope.playlist.join().replace(new RegExp('spotify:track:', 'g'), "");
         });
 
     }

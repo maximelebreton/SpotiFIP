@@ -4,4 +4,4 @@
                           <dd>{{fip.spotify.name}}</dd>
                           <dd>{{fip.spotify.id}}</dd>
                           <dd>{{fip.spotify.album.released}}</dd>
-                      </dl>--></td></table><iframe ng-if="ready" ng-src="{{playlistHref}}" frameborder="0" width="100%" height="640" allowtransparency="true"></iframe></div></div>
+                      </dl>--></td></table><hr><h4>Écouter la playlist</h4><p>Écoutez directement la playlist dans Spotify</p><iframe ng-if="ready" ng-src="{{playlistHref}}" frameborder="0" width="100%" height="640" allowtransparency="true"></iframe><hr><h4>Ajouter la playlist à Spotify</h4><p>Copiez / collez simplement cette portion de code dans une playlist Spotify</p><div class="form-control" style="height:auto!important"><div ng-repeat="(key, track) in playlist">{{track}}</div></div></div></div>
