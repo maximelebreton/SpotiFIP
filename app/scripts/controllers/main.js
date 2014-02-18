@@ -16,8 +16,6 @@ var App = angular.module('spotiFipApp', [
     'ui.bootstrap'
 ]);
 
-
-
 App.directive('onFinishRender', function($timeout) {
     return {
         restrict: 'A',
@@ -105,16 +103,29 @@ App.controller('TimepickerCtrl', function($rootScope, $scope, $filter) {
 });
 
 
-App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter) {
+App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $timeout) {
 
     $rootScope.startDate = $filter('date')(new Date(), 'yyyy-MM-dd');
     $rootScope.startHour = $filter('date')(new Date(), 'H');
+    $scope.tryNumbers = 3;
 
 
-    $scope.start = function() {
+    $scope.start = function(retry) {
 
-        $scope.loadingValue = 75;
-        $scope.loadingType = 'info';
+        $scope.loadingValue = 100;
+
+        if (retry) {
+        	console.log('retry');
+        	
+        	$scope.loadingType = 'warning';
+        	$scope.loadingMessage = 'Tentative de reconnexion avec FIP... ('+$scope.tryNumbers+')';
+        } else {
+
+        	$scope.loadingType = 'info';
+        	$scope.loadingMessage = "Connexion avec FIP...";
+
+        }
+        
 
         $rootScope.$emit('startingEvent');
 
@@ -132,8 +143,8 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter) {
             //$http.jsonp(fipApi).success(function(data) {
             $scope.fipDatas = data.results.collection1;
 
-            $scope.loadingValue = 80;
             $scope.loadingType = 'success';
+            $scope.loadingMessage = "Connexion avec Spotify...";
 
 
             angular.forEach($scope.fipDatas, function(fip, key) {
@@ -145,8 +156,8 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter) {
                 $http.get(spotifyApi + fip.track.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') + ' ' + fip.artist.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')).then(function(res) {
                     fip.spotifyDatas = res.data.tracks;
 
-                    $scope.loadingValue = 100;
                     $scope.loadingType = 'success';
+                    $scope.loadingMessage = "Terminé";
 
                     if (fip.spotifyDatas.length) {
                         var _break = true;
@@ -181,12 +192,23 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter) {
             });
 
         }).error(function(data, status, headers, config) {
-            $scope.loadingValue = 60;
-            $scope.loadingType = 'warning';
-            if (!$scope.tryNumbers == 0) {
-            	$scope.start();
-            	$scope.tryNumbers--;
-            }
+        	
+            $timeout(function() {
+	            $scope.loadingType = 'danger';
+	            $scope.loadingMessage = 'Erreur de connexion...';
+	            if ($scope.tryNumbers == 0) {
+	            	$scope.loadingMessage = "Hum... c'est embarrassant ! Relancez votre recherche, ou signalez moi le problème via Github.";
+	            }
+
+	            $timeout(function() {
+			        if ($scope.tryNumbers > 0) {
+		            	console.log();
+		            	$scope.start(true);
+		            	$scope.tryNumbers--;
+		            }
+			    }, 1500);
+
+		    }, 1500);
             
         });
 
