@@ -1,4 +1,7 @@
 SpotiFIP
 ========
+Get Spotify playlists from the FIP radio by day/hour  
+http://maximelebreton.github.io/SpotiFIP/dist/
 
-Get Spotify playlists from the FIP radio by day/hour.
+
+Repository: https://github.com/maximelebreton/SpotiFIP/tree/gh-pages
