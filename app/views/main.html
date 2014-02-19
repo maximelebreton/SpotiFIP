@@ -31,6 +31,8 @@
         <progressbar class="progress-striped active" value="loadingValue" type="{{loadingType}}">{{loadingMessage}}
         </progressbar>
     </div>
+    
+    <div ng-if="noResults" class="well well-md text-center">Aucun résultat <a href="http://www.fipradio.fr/archives-antenne?start_date={{startDate}}&start_hour={{startHour}}&search=">sur FIP</a>... Veuillez vérifier la date et l'heure, puis recommencez !</div>
 
     <div ng-show="ready">
 
@@ -95,7 +97,7 @@
         <h4>Ajoutez cette playlist à Spotify</h4>
         <p>Copiez / collez simplement cette portion de code dans une playlist Spotify</p>
         <div class="form-control" style="height:auto!important;">
-          <div ng-repeat="(key, track) in playlist">
+          <div ng-repeat="track in playlist">
             {{track}}
           </div>
         </div>

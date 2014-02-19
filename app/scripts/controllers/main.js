@@ -4,7 +4,9 @@
 var spotifyApi = 'http://ws.spotify.com/search/1/track.json?q=';
 
 // FIP
-var fipApi = 'http://kimonolabs.com/api/7s1d5xz8?apikey=bfb617c617700d2b984e1b58cce5c544';
+var fipApi = 'http://www.kimonolabs.com/api/9qx1un9y?apikey=bfb617c617700d2b984e1b58cce5c544';
+
+var weatherApi = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%3D23424819%20and%20u%3D%22c%22%20&format=json&callback=';
 
 // For local testing
 //var fipApi = 'http://127.0.0.1:9000/json/fip-demo.json?q=';
@@ -30,7 +32,7 @@ App.directive('onFinishRender', function($timeout) {
 });
 
 App.controller('DatepickerCtrl', function($rootScope, $scope, $filter) {
-	$rootScope.startDate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    $rootScope.startDate = $filter('date')(new Date(), 'yyyy-MM-dd');
 
     $scope.today = function() {
         $scope.dt = new Date();
@@ -48,20 +50,20 @@ App.controller('DatepickerCtrl', function($rootScope, $scope, $filter) {
 
     $scope.changed = function() {
         $rootScope.startDate = $filter('date')($scope.dt, 'yyyy-MM-dd');
-        console.log('Time changed to: ' + $scope.dt);
+        //console.log('Time changed to: ' + $scope.dt);
     };
 
     $rootScope.$on('startingEvent', function() {
 
         $scope.changed();
-        console.log($rootScope.startDate);
+        //console.log($rootScope.startDate);
 
     });
 
     // Disable weekend selection
 
-    $scope.minDate = $filter('date')( new Date(new Date().getTime() - (13 * 24 * 60 * 60 * 1000)) , 'yyyy-MM-dd');
-    $scope.maxDate = $filter('date')( new Date() , 'yyyy-MM-dd');
+    $scope.minDate = $filter('date')(new Date(new Date().getTime() - (13 * 24 * 60 * 60 * 1000)), 'yyyy-MM-dd');
+    $scope.maxDate = $filter('date')(new Date(), 'yyyy-MM-dd');
 
     $scope.open = function($event) {
         $event.preventDefault();
@@ -86,7 +88,7 @@ App.controller('TimepickerCtrl', function($rootScope, $scope, $filter) {
     $scope.mstep = 1;
 
     $scope.changed = function() {
-        console.log('Time changed to: ' + $scope.mytime);
+        //console.log('Time changed to: ' + $scope.mytime);
         $rootScope.startHour = $filter('date')($scope.mytime, 'H');
     };
 
@@ -109,37 +111,70 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $t
 
     $scope.tryNumbers = 3;
 
-
     $scope.start = function(retry) {
 
         $scope.loadingValue = 100;
+        $scope.noResults = false;
 
         if (retry) {
-        	console.log('retry');
-        	
-        	$scope.loadingType = 'warning';
-        	$scope.loadingMessage = 'Tentative de reconnexion avec FIP... ('+$scope.tryNumbers+')';
+            //console.log('retry');
+
+            $scope.loadingType = 'warning';
+            $scope.loadingMessage = 'Tentative de reconnexion avec FIP... (' + $scope.tryNumbers + ')';
         } else {
 
-        	$scope.loadingType = 'info';
-        	$scope.loadingMessage = "Connexion avec FIP...";
+            $scope.loadingType = 'info';
+            $scope.loadingMessage = "Connexion avec FIP...";
 
         }
-        
+
+
+        $timeout(function() {
+            if ($scope.loadingType != 'success') {
+                $scope.loadingMessage = "Il va falloir attendre un petit peu...";
+            }
+        }, 3000);
+
+        $timeout(function() {
+            if ($scope.loadingType != 'success') {
+                $scope.loadingMessage = "Le temps que le gars de FIP discute avec celui de Spotify...";
+            }
+        }, 6000);
+
+        $timeout(function() {
+            if ($scope.loadingType != 'success') {
+                $scope.loadingMessage = "En attendant, je vous propose de faire un point météo !";
+                $http.get(weatherApi).then(function(res) {
+                    $scope.temperature = res.data.query.results.channel.item.forecast[0];
+                    //console.log($scope.temperature);
+                });
+            }
+        }, 11000);
+
+        $timeout(function() {
+            if ($scope.loadingType != 'success') {
+                $scope.loadingMessage = "Pour la france, les temperatures vont de " + $scope.temperature.low + "°C pour les minimales, et " + $scope.temperature.high + "°C pour les maximales !";
+            }
+        }, 14000);
+
+
+
 
         $rootScope.$emit('startingEvent');
 
         $scope.loading = true;
         $scope.playlist = [];
 
-        //console.log($rootScope.startHour);
-        console.log($rootScope.startDate);
-
-
         // TO DO : use the get method, and allow cross origin policy
         $http.jsonp(fipApi + '&start_hour=' + $rootScope.startHour + '&start_date=' + $rootScope.startDate + '&callback=JSON_CALLBACK').success(function(data) {
 
-        	$scope.tryNumbers = 3;
+            if (data.lastrunstatus == 'failure') {
+                $scope.noResults = true;
+                $scope.loading = false;
+                return;
+            }
+
+            $scope.tryNumbers = 3;
             //$http.jsonp(fipApi).success(function(data) {
             $scope.fipDatas = data.results.collection1;
 
@@ -192,31 +227,30 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $t
             });
 
         }).error(function(data, status, headers, config) {
-        	
+
             $timeout(function() {
-	            $scope.loadingType = 'danger';
-	            $scope.loadingMessage = 'Erreur de connexion...';
-	            if ($scope.tryNumbers == 0) {
-	            	$scope.loadingMessage = "Hum... c'est embarrassant ! Relancez votre recherche, ou signalez moi le problème via Github.";
-	            }
+                $scope.loadingType = 'danger';
+                $scope.loadingMessage = 'Erreur de connexion...';
+                if ($scope.tryNumbers == 0) {
+                    $scope.loadingMessage = "Hum... c'est embarrassant ! Relancez votre recherche, ou signalez moi le problème via Github.";
+                }
 
-	            $timeout(function() {
-			        if ($scope.tryNumbers > 0) {
-		            	console.log();
-		            	$scope.start(true);
-		            	$scope.tryNumbers--;
-		            }
-			    }, 1500);
+                $timeout(function() {
+                    if ($scope.tryNumbers > 0) {
+                        $scope.start(true);
+                        $scope.tryNumbers--;
+                    }
+                }, 1500);
 
-		    }, 1500);
-            
+            }, 1500);
+
         });
 
         $scope.$on('test', function(ngRepeatFinishedEvent) {
-            console.log('ready !');
+            //console.log('ready !');
             $scope.loading = false;
             $scope.ready = true;
-            $scope.playlistHref = 'https://embed.spotify.com/?uri=spotify:trackset:FIP – '+$rootScope.startDate+ ' – ' +$rootScope.startHour+ 'h-'+ ($rootScope.startHour+1) +'h:' + $scope.playlist.join().replace(new RegExp('spotify:track:', 'g'), "");
+            $scope.playlistHref = 'https://embed.spotify.com/?uri=spotify:trackset:FIP – ' + $rootScope.startDate + ' – ' + $rootScope.startHour + 'h-' + ($rootScope.startHour + 1) + 'h:' + $scope.playlist.join().replace(new RegExp('spotify:track:', 'g'), "");
         });
 
     }
