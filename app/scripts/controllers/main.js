@@ -250,7 +250,7 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $t
             //console.log('ready !');
             $scope.loading = false;
             $scope.ready = true;
-            $scope.playlistHref = 'https://embed.spotify.com/?uri=spotify:trackset:FIP – ' + $rootScope.startDate + ' – ' + $rootScope.startHour + 'h-' + ($rootScope.startHour + 1) + 'h:' + $scope.playlist.join().replace(new RegExp('spotify:track:', 'g'), "");
+            $scope.playlistHref = 'https://embed.spotify.com/?uri=spotify:trackset:FIP – ' + $rootScope.startDate + ' – ' + $rootScope.startHour + 'h-' + (parseInt($rootScope.startHour) + 1) + 'h:' + $scope.playlist.join().replace(new RegExp('spotify:track:', 'g'), "");
         });
 
     }
