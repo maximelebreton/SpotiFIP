@@ -4,7 +4,7 @@
 var spotifyApi = 'http://ws.spotify.com/search/1/track.json?q=';
 
 // FIP
-var fipApi = 'http://www.kimonolabs.com/api/9qx1un9y?apikey=bfb617c617700d2b984e1b58cce5c544';
+var fipApi = 'https://www.kimonolabs.com/api/ondemand/9qx1un9y?apikey=bfb617c617700d2b984e1b58cce5c544';
 
 var weatherApi = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%3D23424819%20and%20u%3D%22c%22%20&format=json&callback=';
 
@@ -106,7 +106,7 @@ App.controller('TimepickerCtrl', function($rootScope, $scope, $filter) {
 });
 
 
-App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $timeout) {
+App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $timeout, $q) {
 
 
     $scope.tryNumbers = 3;
@@ -181,6 +181,8 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $t
             $scope.loadingType = 'success';
             $scope.loadingMessage = "Connexion avec Spotify...";
 
+            var deferred = $q.defer();
+            var promises = [];
 
             angular.forEach($scope.fipDatas, function(fip, key) {
 
@@ -188,41 +190,53 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $t
                 var fip_key = key;
                 var spotify_key = 0;
 
-                $http.get(spotifyApi + fip.track.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') + ' ' + fip.artist.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')).then(function(res) {
-                    fip.spotifyDatas = res.data.tracks;
+                promises.push(
 
-                    $scope.loadingType = 'success';
-                    $scope.loadingMessage = "Terminé";
+                  $http.get(spotifyApi + fip.track.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') + ' ' + fip.artist.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')).then(function(res) {
+                      fip.spotifyDatas = res.data.tracks;
 
-                    if (fip.spotifyDatas.length) {
-                        var _break = true;
-                        angular.forEach(fip.spotifyDatas, function(spotifyData, key) {
+                      $scope.loadingType = 'success';
+                      $scope.loadingMessage = "Terminé";
 
-                            spotify_key = key;
+                      if (fip.spotifyDatas.length) {
+                          var _break = true;
+                          angular.forEach(fip.spotifyDatas, function(spotifyData, key) {
 
-                            if (_break) {
-                                //console.log(spotifyData);
-                                if (spotifyData.album.name.match(new RegExp(fip.album, "gi"))) {
+                              spotify_key = key;
 
-                                    fip.spotify = fip.spotifyDatas[key];
-                                    _break = false;
+                              if (_break) {
+                                  //console.log(spotifyData);
+                                  if (spotifyData.album.name.match(new RegExp(fip.album, "gi"))) {
 
-                                } else {
-                                    fip.spotify = fip.spotifyDatas[0];
-                                }
-                            }
+                                      fip.spotify = fip.spotifyDatas[key];
+                                      _break = false;
 
-                        });
+                                  } else {
+                                      fip.spotify = fip.spotifyDatas[0];
+                                  }
+                              }
 
-                        $scope.playlist.push(fip.spotify.href);
+                          });
 
-                        fip.spotify.trackEmbedSrc = 'https://embed.spotify.com/?uri=' + fip.spotify.href;
+                          $scope.playlist.push(fip.spotify.href);
 
-                    }
+                          fip.spotify.trackEmbedSrc = 'https://embed.spotify.com/?uri=' + fip.spotify.href;
+
+                      }
 
 
-                });
+                  })
 
+                );
+
+
+            });
+
+            $q.all(promises).then(function(results){
+
+              $scope.loading = false;
+              $scope.ready = true;
+              $scope.playlistHref = 'https://embed.spotify.com/?uri=spotify:trackset:FIP – ' + $rootScope.startDate + ' – ' + $rootScope.startHour + 'h-' + (parseInt($rootScope.startHour) + 1) + 'h:' + $scope.playlist.join().replace(new RegExp('spotify:track:', 'g'), "");
 
             });
 
@@ -246,12 +260,10 @@ App.controller('MainCtrl', function($rootScope, $scope, $http, $sce, $filter, $t
 
         });
 
-        $scope.$on('test', function(ngRepeatFinishedEvent) {
-            //console.log('ready !');
-            $scope.loading = false;
-            $scope.ready = true;
-            $scope.playlistHref = 'https://embed.spotify.com/?uri=spotify:trackset:FIP – ' + $rootScope.startDate + ' – ' + $rootScope.startHour + 'h-' + (parseInt($rootScope.startHour) + 1) + 'h:' + $scope.playlist.join().replace(new RegExp('spotify:track:', 'g'), "");
-        });
+        //$scope.$on('test', function(ngRepeatFinishedEvent) {
+        //    //console.log('ready !');
+        //
+        //});
 
     }
 
