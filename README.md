@@ -1,3 +1,6 @@
+Since [FIP](http://www.fipradio.fr/archives-antenne) modified its website, and [Kimono]( http://blog.kimonolabs.com/2016/02/15/the-kimono-team-is-joining-palantir/) closed its service, SpotiFIP no longer working...
+===========
+
 SpotiFIP
 ========
 
